@@ -17,8 +17,5 @@ export default async function PainelPage() {
     .from(bookings)
     .orderBy(desc(bookings.createdAt));
 
-  const pending = allBookings.filter((b) => b.status === "pendente");
-  const history = allBookings.filter((b) => b.status !== "pendente");
-
-  return <PainelClient pending={pending} history={history} />;
+  return <PainelClient bookings={allBookings} />;
 }

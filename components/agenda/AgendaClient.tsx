@@ -19,6 +19,9 @@ export default function AgendaClient({
   const [requestType, setRequestType] = useState<"orcamento" | "agendamento">(
     "orcamento"
   );
+  const [serviceType, setServiceType] = useState<"completo" | "mao_de_obra">(
+    "completo"
+  );
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -26,9 +29,17 @@ export default function AgendaClient({
   const today = useMemo(() => startOfDay(new Date()), []);
   const dateValue = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
 
-  function isUnavailable(date: Date) {
-    return isBefore(date, today) || confirmedSet.has(format(date, "yyyy-MM-dd"));
+  function isPastDate(date: Date) {
+    return isBefore(date, today);
   }
+
+  function hasConfirmedBooking(date: Date) {
+    return confirmedSet.has(format(date, "yyyy-MM-dd"));
+  }
+
+  const selectedDateIsConfirmed = selectedDate
+    ? hasConfirmedBooking(selectedDate)
+    : false;
 
   function handleSubmit(formData: FormData) {
     setError(null);
@@ -56,14 +67,26 @@ export default function AgendaClient({
           locale={ptBR}
           selected={selectedDate}
           onSelect={setSelectedDate}
-          disabled={isUnavailable}
+          disabled={isPastDate}
           modifiers={{
-            unavailable: isUnavailable,
+            unavailable: isPastDate,
+            hasEvent: hasConfirmedBooking,
           }}
-          modifiersClassNames={{ unavailable: "rdp-day_unavailable" }}
+          modifiersClassNames={{
+            unavailable: "rdp-day_unavailable",
+            hasEvent: "rdp-day_has-event",
+          }}
           className="sublime-daypicker"
         />
       </div>
+
+      {selectedDateIsConfirmed && (
+        <p className="mx-auto mt-6 max-w-xl text-center text-sm text-[var(--color-gold-light)]">
+          Essa data já tem um evento confirmado. Você ainda pode enviar seu
+          pedido, o Fernando verifica a possibilidade de conciliar dois
+          eventos no mesmo dia dependendo do horário e do porte de cada um.
+        </p>
+      )}
 
       <form
         action={handleSubmit}
@@ -137,6 +160,19 @@ export default function AgendaClient({
         </div>
 
         <div className="flex flex-col gap-2">
+          <label htmlFor="address" className="text-sm text-[var(--color-gold-light)]">
+            Endereço do evento
+          </label>
+          <input
+            id="address"
+            name="address"
+            type="text"
+            required
+            className="rounded border border-[var(--color-gold)]/30 bg-transparent px-4 py-2 text-[var(--color-text-secondary)] outline-none focus:border-[var(--color-gold)]"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
           <label htmlFor="guestCount" className="text-sm text-[var(--color-gold-light)]">
             Número de pessoas
           </label>
@@ -148,6 +184,49 @@ export default function AgendaClient({
             required
             className="rounded border border-[var(--color-gold)]/30 bg-transparent px-4 py-2 text-[var(--color-text-secondary)] outline-none focus:border-[var(--color-gold)]"
           />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="otherDrinks" className="text-sm text-[var(--color-gold-light)]">
+            Outras bebidas além dos drinks
+          </label>
+          <input
+            id="otherDrinks"
+            name="otherDrinks"
+            type="text"
+            placeholder="Ex: refrigerante, água, cerveja, ou deixe em branco se não precisar"
+            className="rounded border border-[var(--color-gold)]/30 bg-transparent px-4 py-2 text-[var(--color-text-secondary)] outline-none placeholder:text-[var(--color-text-secondary)]/40 focus:border-[var(--color-gold)]"
+          />
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <span className="text-sm text-[var(--color-gold-light)]">
+            Tipo de serviço
+          </span>
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
+            <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+              <input
+                type="radio"
+                name="serviceType"
+                value="completo"
+                checked={serviceType === "completo"}
+                onChange={() => setServiceType("completo")}
+                className="accent-[var(--color-gold)]"
+              />
+              Serviço completo
+            </label>
+            <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+              <input
+                type="radio"
+                name="serviceType"
+                value="mao_de_obra"
+                checked={serviceType === "mao_de_obra"}
+                onChange={() => setServiceType("mao_de_obra")}
+                className="accent-[var(--color-gold)]"
+              />
+              Somente mão de obra
+            </label>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3">
@@ -178,6 +257,19 @@ export default function AgendaClient({
               Já agendar o serviço
             </label>
           </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="notes" className="text-sm text-[var(--color-gold-light)]">
+            Observações
+          </label>
+          <textarea
+            id="notes"
+            name="notes"
+            rows={3}
+            placeholder="Tem algo que a gente precisa saber? Conte aqui."
+            className="rounded border border-[var(--color-gold)]/30 bg-transparent px-4 py-2 text-[var(--color-text-secondary)] outline-none placeholder:text-[var(--color-text-secondary)]/40 focus:border-[var(--color-gold)]"
+          />
         </div>
 
         {error && (

@@ -15,6 +15,40 @@ export function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+export function StarIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.2}
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 3.5l2.47 5.51 5.98.55-4.53 4 1.32 5.88L12 16.5l-5.24 2.94 1.32-5.88-4.53-4 5.98-.55L12 3.5Z" />
+    </svg>
+  );
+}
+
+export function QuoteIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={0.9}
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M7.6 8.4c-2.1 0-3.7 1.7-3.7 3.8 0 2.1 1.6 3.5 3.4 3.5.3 0 .6 0 .9-.1-.4 1.7-1.7 3-3.3 3.5l.5 1.2c2.9-.8 4.9-3.1 4.9-6.4 0-3.1-1.9-5.5-4.7-5.5Z" />
+      <path d="M17.1 8.4c-2.1 0-3.7 1.7-3.7 3.8 0 2.1 1.6 3.5 3.4 3.5.3 0 .6 0 .9-.1-.4 1.7-1.7 3-3.3 3.5l.5 1.2c2.9-.8 4.9-3.1 4.9-6.4 0-3.1-1.9-5.5-4.7-5.5Z" />
+    </svg>
+  );
+}
+
 export function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg

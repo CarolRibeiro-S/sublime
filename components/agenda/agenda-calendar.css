@@ -29,3 +29,27 @@
   color: color-mix(in srgb, var(--color-text-secondary) 55%, transparent);
   text-decoration: line-through;
 }
+
+.sublime-daypicker .rdp-day_confirmed,
+.sublime-daypicker .rdp-day_confirmed .rdp-day_button {
+  background: var(--color-gold);
+  color: var(--color-bg);
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+.sublime-daypicker .rdp-day_has-event .rdp-day_button {
+  position: relative;
+}
+
+.sublime-daypicker .rdp-day_has-event .rdp-day_button::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+}

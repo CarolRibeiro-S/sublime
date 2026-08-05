@@ -37,7 +37,7 @@ export default function MobileMenu({
         type="button"
         onClick={onClose}
         aria-label="Fechar menu"
-        className="absolute right-6 top-6 text-[var(--color-gold)] opacity-80 transition-opacity hover:opacity-100"
+        className="fixed right-6 top-6 z-[70] text-[var(--color-gold)] opacity-80 transition-opacity hover:opacity-100"
       >
         <svg
           width="26"

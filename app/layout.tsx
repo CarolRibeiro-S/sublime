@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   title: "Sublime Coquetelaria | Fernando Rodrigues",
   description:
     "Sublime Coquetelaria com o bartender Fernando Rodrigues, oferecendo drinks autorais e clássicos para eventos.",
+};
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
