@@ -1,0 +1,31 @@
+.sublime-daypicker.rdp-root {
+  --rdp-accent-color: var(--color-gold);
+  --rdp-accent-background-color: color-mix(in srgb, var(--color-gold) 15%, transparent);
+  --rdp-today-color: var(--color-gold-light);
+  --rdp-disabled-opacity: 0.35;
+  --rdp-outside-opacity: 0.4;
+
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+.sublime-daypicker .rdp-caption_label,
+.sublime-daypicker .rdp-weekday {
+  color: var(--color-gold);
+}
+
+.sublime-daypicker .rdp-day_button {
+  color: var(--color-text-secondary);
+}
+
+.sublime-daypicker .rdp-button_next,
+.sublime-daypicker .rdp-button_previous {
+  color: var(--color-gold);
+}
+
+.sublime-daypicker .rdp-day_unavailable .rdp-day_button {
+  position: relative;
+  color: color-mix(in srgb, var(--color-text-secondary) 55%, transparent);
+  text-decoration: line-through;
+}
