@@ -64,19 +64,32 @@ export async function createBooking(
   const serviceTypeLabel =
     serviceType === "completo" ? "Serviço completo" : "Somente mão de obra";
 
+  const EMOJI = {
+    calendar: "\u{1F4C5}", // calendário
+    clock: "\u{1F550}", // relógio
+    party: "\u{1F389}", // confete
+    pin: "\u{1F4CD}", // localização
+    people: "\u{1F465}", // pessoas
+    cup: "\u{1F964}", // copo
+    tools: "\u{1F6E0}\u{FE0F}", // ferramentas
+    speech: "\u{1F4AC}", // balão de fala
+    memo: "\u{1F4DD}", // bloco de notas
+    warning: "\u{26A0}\u{FE0F}", // alerta
+  };
+
   const message =
     `Olá, Fernando, tudo bem? Sou ${clientName} e vim pelo site da Sublime.\n\n` +
-    `📅 Data: ${formatDateBR(eventDate)}\n` +
-    `🕐 Horário: ${eventTime}\n` +
-    `🎉 Tipo de evento: ${eventType}\n` +
-    `📍 Endereço: ${address}\n` +
-    `👥 Pessoas: ${guestCount}\n` +
-    (otherDrinks ? `🥤 Outras bebidas: ${otherDrinks}\n` : "") +
-    `🛠️ Tipo de serviço: ${serviceTypeLabel}\n` +
-    `💬 Gostaria de: ${requestLabel}\n\n` +
-    (notes ? `📝 Observações: ${notes}\n\n` : "") +
+    `${EMOJI.calendar} Data: ${formatDateBR(eventDate)}\n` +
+    `${EMOJI.clock} Horário: ${eventTime}\n` +
+    `${EMOJI.party} Tipo de evento: ${eventType}\n` +
+    `${EMOJI.pin} Endereço: ${address}\n` +
+    `${EMOJI.people} Pessoas: ${guestCount}\n` +
+    (otherDrinks ? `${EMOJI.cup} Outras bebidas: ${otherDrinks}\n` : "") +
+    `${EMOJI.tools} Tipo de serviço: ${serviceTypeLabel}\n` +
+    `${EMOJI.speech} Gostaria de: ${requestLabel}\n\n` +
+    (notes ? `${EMOJI.memo} Observações: ${notes}\n\n` : "") +
     (existingConfirmed.length > 0
-      ? `⚠️ Observação: essa data já possui um evento confirmado, verificando se é possível conciliar.\n\n`
+      ? `${EMOJI.warning} Observação: essa data já possui um evento confirmado, verificando se é possível conciliar.\n\n`
       : "") +
     `Fico no aguardo do seu retorno, obrigada!`;
 
