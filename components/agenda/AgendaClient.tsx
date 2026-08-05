@@ -126,7 +126,7 @@ export default function AgendaClient({
             className="rounded border border-[var(--color-gold)]/30 bg-[var(--color-bg)] px-4 py-2 text-[var(--color-text-secondary)] outline-none focus:border-[var(--color-gold)]"
           >
             <option value="" disabled>
-              Selecione o tipo de evento
+              Selecione
             </option>
             {EVENT_TYPES.map((type) => (
               <option key={type} value={type}>
@@ -154,7 +154,7 @@ export default function AgendaClient({
           <span className="text-sm text-[var(--color-gold-light)]">
             Eu gostaria de
           </span>
-          <div className="flex gap-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
             <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
               <input
                 type="radio"

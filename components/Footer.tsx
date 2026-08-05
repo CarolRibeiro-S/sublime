@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons";
 
 const INSTAGRAM_URL = "https://www.instagram.com/sublimecoquetelaria/";
@@ -44,13 +43,6 @@ export default function Footer() {
             Carol Ribeiro
           </a>
         </p>
-
-        <Link
-          href="/painel"
-          className="text-[10px] tracking-wide text-[var(--color-text-secondary)]/30 transition-opacity hover:text-[var(--color-text-secondary)]/70"
-        >
-          Acesso Fernando
-        </Link>
       </div>
     </footer>
   );

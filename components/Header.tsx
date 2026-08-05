@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons";
+import MobileMenu from "@/components/MobileMenu";
 
 const NAV_LINKS = [
   { href: "/sobre", label: "Sobre" },
@@ -17,6 +18,7 @@ const WHATSAPP_URL = "https://wa.me/5561991581775";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -76,8 +78,28 @@ export default function Header() {
           >
             <WhatsAppIcon className="h-5 w-5" />
           </a>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Abrir menu"
+            className="opacity-80 transition-opacity hover:opacity-100 md:hidden"
+          >
+            <Image
+              src="/images/icons/menu-glass.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6"
+            />
+          </button>
         </div>
       </div>
+
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        links={NAV_LINKS}
+      />
     </header>
   );
 }
