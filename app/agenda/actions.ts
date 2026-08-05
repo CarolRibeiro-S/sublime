@@ -124,5 +124,16 @@ export async function createBooking(
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
+  // TODO: log temporário para investigar corrupção de emojis em produção (Vercel).
+  console.log("[DEBUG emoji] whatsappUrl final (antes de retornar ao cliente):", whatsappUrl);
+  console.log(
+    "[DEBUG emoji] whatsappUrl contem '%F0%9F' (inicio correto de emoji UTF-8)?",
+    whatsappUrl.includes("%F0%9F")
+  );
+  console.log(
+    "[DEBUG emoji] whatsappUrl contem '%EF%BF%BD' (caractere de erro U+FFFD ja codificado)?",
+    whatsappUrl.includes("%EF%BF%BD")
+  );
+
   return { success: true, whatsappUrl };
 }

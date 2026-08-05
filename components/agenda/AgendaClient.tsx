@@ -24,6 +24,7 @@ export default function AgendaClient({
   );
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [debugUrl, setDebugUrl] = useState<string | null>(null);
 
   const confirmedSet = useMemo(() => new Set(confirmedDates), [confirmedDates]);
   const today = useMemo(() => startOfDay(new Date()), []);
@@ -49,12 +50,29 @@ export default function AgendaClient({
         setError(result.error);
         return;
       }
-      window.location.href = result.whatsappUrl;
+
+      // TODO: debug temporário para investigar corrupção de emojis no WhatsApp.
+      // Mostra a URL recebida do servidor no console e na tela por 3s antes de redirecionar,
+      // para comparar com o log "[DEBUG emoji] whatsappUrl final" do servidor (Vercel).
+      console.log("[DEBUG emoji] whatsappUrl recebida no cliente:", result.whatsappUrl);
+      setDebugUrl(result.whatsappUrl);
+      setTimeout(() => {
+        window.location.href = result.whatsappUrl;
+      }, 3000);
     });
   }
 
   return (
     <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
+      {debugUrl && (
+        <div className="fixed inset-x-4 top-24 z-[100] max-h-[60vh] overflow-y-auto break-all rounded-lg border border-[var(--color-gold)] bg-[var(--color-bg)] p-4 text-xs text-[var(--color-gold-light)] shadow-lg">
+          <p className="mb-2 font-medium text-[var(--color-gold)]">
+            [DEBUG] URL que será usada no redirecionamento (some em 3s):
+          </p>
+          <p>{debugUrl}</p>
+        </div>
+      )}
+
       <h1 className="mb-2 text-center text-3xl">Agenda</h1>
       <p className="mb-10 text-center text-sm font-light text-[var(--color-text-secondary)]">
         Escolha uma data disponível no calendário e preencha o formulário
