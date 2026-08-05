@@ -93,6 +93,35 @@ export async function createBooking(
       : "") +
     `Fico no aguardo do seu retorno, obrigada!`;
 
+  // TODO: log temporário para investigar corrupção de emojis em produção (Vercel).
+  // Não há "runtime = 'edge'" declarado em nenhum arquivo do projeto (app/agenda ou outros),
+  // então checamos também em tempo de execução qual runtime está de fato rodando.
+  console.log(
+    "[DEBUG emoji] runtime em tempo de execucao:",
+    "EdgeRuntime" in globalThis ? "edge" : "nodejs",
+    "| process.version:",
+    typeof process !== "undefined" ? process.version : "N/A (sem objeto process)"
+  );
+  console.log("[DEBUG emoji] mensagem completa:", message);
+  console.log(
+    "[DEBUG emoji] code points da mensagem inteira:",
+    Array.from(message)
+      .map((c) => c.codePointAt(0)!.toString(16))
+      .join(" ")
+  );
+  console.log(
+    "[DEBUG emoji] code points esperados vs encontrados em cada emoji:",
+    JSON.stringify(
+      Object.entries(EMOJI).map(([name, expected]) => {
+        const expectedCodePoints = Array.from(expected)
+          .map((c) => c.codePointAt(0)!.toString(16))
+          .join(" ");
+        const foundInMessage = message.includes(expected);
+        return { name, expectedCodePoints, foundInMessage };
+      })
+    )
+  );
+
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
   return { success: true, whatsappUrl };
